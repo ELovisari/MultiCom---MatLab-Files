@@ -1,4 +1,5 @@
 % A very simple example on multicommodity
+% And I'm testing git...
 % Not sure if we are going to use all the settings below
 nof = 2; % The number of flows
 originNodes = zeros(nof, 1);
