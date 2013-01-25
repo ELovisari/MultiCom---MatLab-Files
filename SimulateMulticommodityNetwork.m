@@ -11,7 +11,8 @@ function [aafRho, aafFlow, aaafG, aafChange, afDischarge] = ...
                                                 etaMu,                      ...
                                                 nof,                        ...
                                                 originNodes,                ...
-                                                destNodes)
+                                                destNodes,                  ...
+                                                bFlagUseTrafficLights)
 
 % edges,nodes
 iNumberEdges = size(aafIncidenceMatrix, 1);
@@ -65,7 +66,7 @@ for t = 2:Tmax
             % moment
             for i = 1:nof
                 % ComputeG(sum(afRhoOfCurrentEdges)', afCurrentThreshold, afCurrentAlphaRouting(:, i), afCurrentBetaRouting(:, i), 0)
-                aaafG(i, aiCurrentEdges, iEdges, t)	= ComputeG(sum(afRhoOfCurrentEdges)', afCurrentThreshold, afCurrentAlphaRouting(:, i), afCurrentBetaRouting(:, i), 0);
+                aaafG(i, aiCurrentEdges, iEdges, t)	= ComputeG(sum(afRhoOfCurrentEdges)', afCurrentThreshold, afCurrentAlphaRouting(:, i), afCurrentBetaRouting(:, i), bFlagUseTrafficLights);
                 aaafG(i, iEdges, iEdges, t)            = aaafG(i, iEdges, iEdges, t) - 1;
             end
             %

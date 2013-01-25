@@ -7,7 +7,7 @@ close all
 topologyMultiTest4
 
 % Number of time steps
-Tmax = 4000;
+Tmax = 8000;
 
 % Length of each timestep
 T = 0.01;
@@ -32,7 +32,7 @@ etaMu                   = 2*ones(M,1);
 
 % Initial condition, just set all to zero and to generic
 afInitialConditionRho = zeros(nof, M);
-afInitialConditionRho1 = 2*rand(nof, M);
+%afInitialConditionRho = 2*rand(nof, M);
 
 % Don't use any traffic lights
 bFlagUseTrafficLights   = 1;  
@@ -41,7 +41,7 @@ bFlagUseTrafficLights   = 1;
 [aafRho, aafFlow, aaafG, aafChange, afDischarge]         = SimulateMulticommodityNetwork(                   ...
                                                             A, aafFmax, afLambda0, afThreholdRho, T, Tmax,         ...
                                                             afInitialConditionRho, fAlphaRouting,                 ...
-                                                            fBetaRouting, etaMu, nof, originNodes, destNodes);
+                                                            fBetaRouting, etaMu, nof, originNodes, destNodes, bFlagUseTrafficLights);
 aafRho1 = aafRho; aafFlow1 = aafFlow; aaafG1 = aaafG; aafChange1 = aafChange; afDischarge1 = afDischarge;
 %
 % [aafRho1, aafFlow1, aaafG1, aafChange1, afDischarge1]         = SimulateMulticommodityNetwork(                   ...
