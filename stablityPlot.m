@@ -7,7 +7,7 @@ close all
 topologyMultiTest4
 
 % Number of time steps
-Tmax = 2000;
+Tmax = 4000;
 
 % Length of each timestep
 T = 0.01;
@@ -35,7 +35,7 @@ afInitialConditionRho = zeros(nof, M);
 %afInitialConditionRho = 2*rand(nof, M);
 
 % Don't use any traffic lights
-bFlagUseTrafficLights   = 0;  
+bFlagUseTrafficLights   = 1;  
 
 % Tolerance for stability 0.95
 tol = 0.95;

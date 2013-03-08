@@ -4,7 +4,7 @@ close all
 
 
 % Import the selected topology
-topologyMultiTest5
+topologyMultiTest
 
 % Number of time steps
 Tmax = 2000;
@@ -17,8 +17,8 @@ aafFmax = 5*ones(M, Tmax);
 %aafFmax(4, :) = ones(1, Tmax);
 
 % Total inflow
-afLambda0 =   1*ones(nof, Tmax); 
-afLambda0(1,1001:end) =0;
+afLambda0 =   0.5*ones(nof, Tmax); 
+%afLambda0(1,:) =1;
 % Stop one flow after some time
 % afLambda0(1, 1000:2000) = 0;
 
@@ -123,24 +123,23 @@ for iEdge = 1:M
     title(['Vel ', num2str(iEdge)])
 end
 %%
-% figure
-% hold on
-% title('G 4->2 4->5(.)')
-figure
-hold on
+vel = @(x) (1-exp(-x))/(x);
+veldiff = @(x) (exp(-x)*x-(1-exp(-x)))/(x^2);
 
- plot(diff(squeeze(aafRho(1, 2, :)) + squeeze(aafFlow(2, 2, :))),'b')
- plot(diff(squeeze(aafFlow(1, 6 , :))),'r')
-% plot(squeeze(aaafG(2, 2, 4, :)),'g')    
-% 
-% plot(squeeze(aaafG(1, 5, 4, :)),':b')
-% plot(squeeze(aaafG(2, 5, 4, :)),':g')    
-%%
+jacobian = zeros(6,6);
+jacobian(1,1) = -vel(aafRho(1,1,end))-aafRho(1,1,end)*veldiff(aafRho(1,1,end));
+jacobian(2,2) = -vel(aafRho(2,2,end))-aafRho(2,2,end)*veldiff(aafRho(2,2,end));
+jacobian(3,1) = vel(aafRho(1,1,end)) + aafRho(1,1,end)*veldiff(aafRho(1,1,end));
+jacobian(3,3) = -vel(sum(aafRho(:,3,end)))-aafRho(1,3,end)*veldiff(sum(aafRho(:,3,end)));
+jacobian(3,4) = -aafRho(1,3,end)*veldiff(sum(aafRho(:,3,end)));
+jacobian(4,2) = vel(aafRho(2,2,end)) + aafRho(2,2,end)*veldiff(aafRho(2,2,end));
+jacobian(4,3) = -aafRho(2,3,end)*veldiff(sum(aafRho(:,3,end)));
+jacobian(4,4) = -vel(sum(aafRho(:,3,end)))-aafRho(2,3,end)*veldiff(sum(aafRho(:,3,end)));
+jacobian(5,3) = vel(sum(aafRho(:,3,end)))+aafRho(1,3,end)*veldiff(sum(aafRho(:,3,end)));
+jacobian(5,4) = -aafRho(1,3,end)*veldiff(sum(aafRho(:,3,end)));
+jacobian(5,5) = -vel(aafRho(1,4,end))-aafRho(1,4,end)*veldiff(aafRho(1,4,end));
+jacobian(6,3) =  -aafRho(2,3,end)*veldiff(sum(aafRho(:,3,end)));
+jacobian(6,4) = vel(sum(aafRho(:,3,end)))+aafRho(2,3,end)*veldiff(sum(aafRho(:,3,end)));
+jacobian(6,6) = -vel(aafRho(2,5,end))-aafRho(2,5,end)*veldiff(aafRho(2,5,end));
 
-
-
-figure
-iEdge = 5;
-
-    plot(squeeze(aafRho(1, iEdge, :)) + squeeze(aafRho(2, iEdge, :)),'r')
-  title(['Flow ' num2str(iEdge)])
+eig(jacobian)

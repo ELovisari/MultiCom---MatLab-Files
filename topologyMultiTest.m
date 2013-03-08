@@ -26,5 +26,5 @@ A(5,4)      = 1;    A(5,6)      = -1;
 
 % fAlphaRouting, just to ban some routes
 fAlphaRouting = ones(M, nof);
-fAlphaRouting(4, 1) = 0;
-fAlphaRouting(5, 2) = 0;
+fAlphaRouting(4, 2) = 0;
+fAlphaRouting(5, 1) = 0;
