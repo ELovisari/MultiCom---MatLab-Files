@@ -5,7 +5,7 @@ topologyMultiTest
 
 rho = aafRho(:,:, end);
 % Out velocity function
-vel = @(x) (1-exp(-x))/(x); 
+vel = @(x)  (1-exp(-x))/(x);
 veldiff = @(x) (exp(-x)*x-(1-exp(-x)))/(x^2);
 
 
@@ -15,11 +15,26 @@ nos = M*nof;  % Number of states
 jacobian = zeros(nos, nos);
 
 
-% Loop through the 
+% Loop through the
 for i = 1:M
     % The routing policy, needs to be calculated specific for every link
     % We need to modify this
     G = @(x) 1;
     Gdiff = @(x) 0;
+    for j = 1:nof
+        for k = 1:nof
+            if rho(j,i) > 0
+                if k == j
+                    jacobian(nof*(i-1)+j, nof*(i-1)+k) = -vel(sum(rho(:, i))) - rho(j, i)*veldiff(sum(rho(:,i)));
+                else
+                    
+                    jacobian(nof*(i-1)+j, nof*(i-1)+k) =  -rho(j, i)*veldiff(sum(rho(:,i)));
+                end
+            end
+            
+        end
+    end
     
     
+end
+

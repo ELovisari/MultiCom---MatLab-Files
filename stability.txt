@@ -1,0 +1,4 @@
+Stability 5
+fBetaRouting(2,:) = [1 5];
+fBetaRouting(5,:) = [10 5];
+ 
