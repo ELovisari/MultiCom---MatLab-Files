@@ -29,7 +29,8 @@ aaafG = zeros(nof, iNumberEdges, iNumberEdges+1, Tmax);      % routing policy fu
 %
 % initial condition
 aafRho(:, :, 1) = afInitialConditionRho;
-%
+%        if numel(aiConsecutiveEdges) > 0
+
 for t = 2:Tmax
     %
     if mod(t, 500) == 0, t, end
@@ -52,7 +53,8 @@ for t = 2:Tmax
         %
         iHeadOfEdge                         = find(aafIncidenceMatrix(iEdges, :) == -1);
         aiConsecutiveEdges                  = find(aafIncidenceMatrix(:,iHeadOfEdge) == 1);
-        aiCurrentEdges                      = [iEdges; aiConsecutiveEdges];
+        
+        aiCurrentEdges                     = [iEdges; aiConsecutiveEdges];
         %afCurrentBetaRouting                = [1*fBetaRouting;fBetaRouting*ones(size(aiConsecutiveEdges))];
         afCurrentBetaRouting                = [fBetaRouting(iEdges,:); fBetaRouting(aiConsecutiveEdges,:)];
         afCurrentAlphaRouting               = [fAlphaRouting(iEdges,:); fAlphaRouting(aiConsecutiveEdges,:)];

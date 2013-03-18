@@ -1,6 +1,6 @@
 % Calculate the jacobian for a given topology and densities
 
-%topologyMultiTest6
+topologyMultiTest6
 
 
 rho = aafRho(:,:, end);
@@ -84,6 +84,7 @@ for i = 1:nos
                                                             A, aafFmax, afLambda0, afThreholdRho, T, 2,         ...
                                                             rhop, fAlphaRouting,                 ...
                                                             fBetaRouting, etaMu, nof, originNodes, destNodes, bFlagUseTrafficLights);
+                                                        aafFlow(:,:,:)
     flowp = reshape(aafChange(:,:,2), nos, 1);
     
     [~, aafFlow, ~, aafChange, ~]         = SimulateMulticommodityNetwork(                   ...
@@ -91,11 +92,12 @@ for i = 1:nos
                                                             rhom, fAlphaRouting,                 ...
                                                             fBetaRouting, etaMu, nof, originNodes, destNodes, bFlagUseTrafficLights);
     flowm =  reshape(aafChange(:,:,2), nos, 1);
- 
+    flowp
+    flowm
     f(:, i) = (flowp - flowm)./2./h;
     end
 end
-eig(f)
+f
 
 
     % Calculate the inflow

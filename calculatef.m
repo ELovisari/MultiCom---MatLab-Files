@@ -1,22 +1,11 @@
-function [aafRho, aafFlow, aaafG, aafChange, afDischarge] = ...
-                SimulateMulticommodityNetwork(  aafIncidenceMatrix,         ...
-                                                aafFmax,                    ...
-                                                afLambda0,                  ...
-                                                afThreholdRho,              ...
-                                                T,                          ...
-                                                Tmax,                       ...
-                                                afInitialConditionRho,      ...
-                                                fAlphaRouting,              ...
-                                                fBetaRouting,               ...
-                                                etaMu,                      ...
-                                                nof,                        ...
-                                                originNodes,                ...
-                                                destNodes,                  ...
-                                                bFlagUseTrafficLights)
 
-% edges,nodes
-iNumberEdges = size(aafIncidenceMatrix, 1);
-iNumberNodes = size(aafIncidenceMatrix, 2);
+iNumberEdges = size(A, 1);
+iNumberNodes = size(A, 2);
+f = zeros(iNumberEdges*nof,1);
+
+for i = 1:nof:iNumberEdges*nof
+   f(i:i+nof-1) = ComputeMu(rho, afThreholdRho, aafFmax(:, t), etaMu, nof);
+end
 %
 % storage allocation
 aafRho      = zeros(nof, iNumberEdges, Tmax);                % densities
@@ -25,14 +14,12 @@ aafFlow     = zeros(nof, iNumberEdges, Tmax);                % flows
 afLambda    = zeros(nof, iNumberNodes,Tmax);                 % incoming flow in the nodes
 aafChange   = zeros(nof, iNumberEdges, Tmax);                % changes
 afDischarge = zeros(nof, Tmax,1);                            % total outflow
-aaafG = zeros(nof, iNumberEdges, iNumberEdges+1, Tmax);      % routing policy functions
+aaafG = zeros(nof, iNumberEdges, iNumberEdges+1, Tmax); ComputeMu(afOldRho, afThreholdRho, aafFmax(:, t), etaMu, nof);     % routing policy functions
 %
 % initial condition
 aafRho(:, :, 1) = afInitialConditionRho;
-%        if numel(aiConsecutiveEdges) > 0
 
-for t = 2:Tmax
-    %
+    
     if mod(t, 500) == 0, t, end
     afOldRho = aafRho(:, :, t-1);
     %
@@ -53,16 +40,15 @@ for t = 2:Tmax
         %
         iHeadOfEdge                         = find(aafIncidenceMatrix(iEdges, :) == -1);
         aiConsecutiveEdges                  = find(aafIncidenceMatrix(:,iHeadOfEdge) == 1);
-        
-        aiCurrentEdges                     = [iEdges; aiConsecutiveEdges];
+        aiCurrentEdges                      = [iEdges; aiConsecutiveEdges];
         %afCurrentBetaRouting                = [1*fBetaRouting;fBetaRouting*ones(size(aiConsecutiveEdges))];
         afCurrentBetaRouting                = [fBetaRouting(iEdges,:); fBetaRouting(aiConsecutiveEdges,:)];
         afCurrentAlphaRouting               = [fAlphaRouting(iEdges,:); fAlphaRouting(aiConsecutiveEdges,:)];
         %
         if numel(aiConsecutiveEdges) > 0
-            %
+            %end
             afRhoOfCurrentEdges                 = afOldRho(:, aiCurrentEdges);
-            afCurrentThreshold             aafRho     = afThreholdRho(aiCurrentEdges);
+            afCurrentThreshold                  = afThreholdRho(aiCurrentEdges);
             
             % Should not need a loop here, but I'm a little lazy at the
             % moment
@@ -75,7 +61,7 @@ for t = 2:Tmax
         else%
             %
             aaafG(:, iEdges, iEdges, t)            = -1;
-            %
+            %end
         end;%
         %
     end;%

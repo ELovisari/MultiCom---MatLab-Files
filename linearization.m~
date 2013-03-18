@@ -13,7 +13,7 @@ Tmax = 2000;
 T = 0.01;
 
 % Set the capacity on the edges
-aafFmax = 1*ones(M, Tmax);
+aafFmax = 5*ones(M, Tmax);
 %aafFmax(4, :) = ones(1, Tmax);
 
 % Total inflow

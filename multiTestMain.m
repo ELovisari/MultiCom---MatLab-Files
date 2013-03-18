@@ -4,7 +4,7 @@ close all
 
 
 % Import the selected topology
-topologyMultiTest5
+topologyMultiTest6
 
 % Number of time steps
 Tmax = 2000;
@@ -18,14 +18,14 @@ aafFmax = 5*ones(M, Tmax);
 
 % Total inflow
 afLambda0 =   1*ones(nof, Tmax); 
-afLambda0(1,1001:end) =0;
+%afLambda0(1,1001:end) =0;
 % Stop one flow after some time
 % afLambda0(1, 1000:2000) = 0;
 
 % No thresholds
 afThreholdRho = Inf*rand(M,1); 
 
-% Routing policy (Should really block some...)
+% Routing policy (Should really block somComputeMu(afOldRho, afThreholdRho, aafFmax(:, t), etaMu, nof);e...)
 fBetaRouting            = ceil(10*rand(M,nof));     
 % 
 % fBetaRouting = [     1     2
@@ -38,30 +38,32 @@ fBetaRouting            = ceil(10*rand(M,nof));
 %      7     4
 %      2     7]
      %8     2]
-% fBetaRouting = [ 
+% fBetaRouting = [ fBetaRouting(2,1) = 10;
+fBetaRouting(5,1) = 1;
+
 %      7     9
 %      7     8
 %      4     6
 %      2     2
 %      1    10
-%      5     3
+%      5     3squeeze(aafRho(1, iEdge, :))
 %      2    10
 %      8     3
 %      4     4];
  
 
 % Flow 1
-% fBetaRouting(2,1) = 1;
-% fBetaRouting(5,1) = 9;
-% 
-% fBetaRouting(2,2) = 3;
-% fBetaRouting(5,2) = 7;
+fBetaRouting(2,1) = 1;
+fBetaRouting(5,1) = 10;
+% squeeze(aafRho(1, iEdge, :))
+fBetaRouting(2,2) = 10;
+fBetaRouting(5,2) = 1;
 
-fBetaRouting            = ones(M,nof);     
+ %fBetaRouting            = ones(M,nof);     
 
 
 % Mu (CHANGE)
-etaMu                   = 2*ones(M,1);
+etaMu                   = 10*ones(M,1);
 %etaMu(6) = 1;
 
 % Initial condition, just set all to zero and to generic
