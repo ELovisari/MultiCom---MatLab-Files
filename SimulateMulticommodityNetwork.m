@@ -129,7 +129,7 @@ for t = 2:Tmax
     
     for i = 1:nof
        aiEdgesToDestination                  = find(aafIncidenceMatrix(:, destNodes(i)) == -1);
-       afDischarge(i, t-1)                      = sum(aafFlow(i, aiEdgesToDestination,t)); 
+       afDischarge(i, t-1)                      = sum(aafFlow(i, aiEdgesToDestination,t));
     end
     % check
     if isnan(aafRho(:, t))
