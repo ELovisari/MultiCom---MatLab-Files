@@ -13,14 +13,14 @@ Tmax = 2000;
 T = 0.01;
 
 % Set the capacity on the edges
-aafFmax = 0.2*ones(M, Tmax);
+aafFmax = 1*ones(M, Tmax);
 
 % Allow higher capacity on the draining links
-%aafFmax(2, :) = 10*ones(1, Tmax);
-%aafFmax(2, :) = 10*ones(1, Tmax);
+aafFmax(2, :) = 10*ones(1, Tmax);
+aafFmax(8, :) = 10*ones(1, Tmax);
 
 % Total inflow
-afLambda0 =   1*ones(nof, Tmax); 
+afLambda0 =   5*ones(nof, Tmax); 
 %afLambda0(1,1001:end) =0;
 % Stop one flow after some time
 % afLambda0(1, 1000:2000) = 0;
