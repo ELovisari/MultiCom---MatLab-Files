@@ -14,6 +14,7 @@ for iEdge = 1:length(afRho)
 %         fFlow(iEdge) = 0;
 %     end
     %
+   
     totalRho = sum(afRho(:, iEdge));
     if totalRho == 0
        vel = afFmax(iEdge);
@@ -21,7 +22,7 @@ for iEdge = 1:length(afRho)
         vel = afFmax(iEdge)*(1-exp(-etaMu(iEdge)*totalRho))/totalRho;
     end
     
-    fFlow(:, iEdge) = afRho(: ,iEdge)*vel;
+    fFlow(:, iEdge) = afRho(:, iEdge)*vel;
     
 end;%
 %

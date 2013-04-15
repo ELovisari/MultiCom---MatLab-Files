@@ -77,6 +77,8 @@ for t = 2:Tmax
             aaafG(:, iEdges, iEdges, t)            = -1;
             %
         end;%
+        
+%           aaafG(:, iEdges, iEdges, t) 
         %
     end;%
     %

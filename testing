@@ -1,0 +1,6 @@
+l1 = -1;
+while(l1 < 0)
+   multiTestMain
+   investigeL1
+   l1 = max(sum(2:end))
+end

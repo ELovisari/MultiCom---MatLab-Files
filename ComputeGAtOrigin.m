@@ -4,7 +4,7 @@
 function G = ComputeGAtOrigin(afRho, afThreholdRho, fBetaRouting)
 %
 iNumberOfEdges = size(afRho,2);
-afRhoModified = zeros(iNumberOfEdges,1);
+%afRhoModified = zeros(iNumberOfEdges,1);
 %
 G = zeros(iNumberOfEdges,1);
 Z = 0;
@@ -12,6 +12,8 @@ Z = 0;
 for iEdge = 1:iNumberOfEdges
     %
     afRhoModified(iEdge) = RhoModified(afRho(iEdge), afThreholdRho(iEdge));
+   
+   afRhoModified(iEdge) = afRho(iEdge);
     G(iEdge) = exp(-fBetaRouting(iEdge)*afRhoModified(iEdge));
     %
 end;%

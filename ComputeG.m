@@ -9,17 +9,23 @@ afRhoModified = zeros(iNumberOfEdges,1);
 %
 G = zeros(iNumberOfEdges,1);
 %
-for iEdge = 1:iNumberOfEdges
+for iEdge = 2:iNumberOfEdges
     %
     afRhoModified(iEdge) = RhoModified(afRho(iEdge), afThreholdRho(iEdge));
+    %afRhoModified(iEdge) = afRho(iEdge);
+
     G(iEdge) = fAlphaRouting(iEdge)*exp(-fBetaRouting(iEdge)*afRhoModified(iEdge));
     %
 end;%
+G = G/sum(G);
 if bFlagUseTrafficLights == 0
     % in case traffic light is not used, the fraction of flow which is
     % retained is always zero (except - see next case)
     G(1) = 0; 
-end;%
+else
+        afRhoModified(1) = RhoModified(afRho(1), afThreholdRho(1));
+   G(1) = fAlphaRouting(1)*exp(-10*afRhoModified(1));
+end
 G = G/sum(G);
 if any(isnan(G))
     dist('oops');
