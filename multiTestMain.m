@@ -4,16 +4,16 @@ close all
 
 
 % Import the selected topology
-topologyMultiTest7
+topologyMultiTest8
 
 % Number of time steps
-Tmax = 8000;
+Tmax = 2000;
 
 % Length of each timestep
 T = 0.01;
 
 % Set the capacity on the edges
-aafFmax = 1*ones(M, Tmax);
+aafFmax = 2*ones(M, Tmax);
 
 % aafFmax(4,:) = 3;
 % aafFmax(3,:) = 3;
@@ -78,19 +78,19 @@ fBetaRouting            = ceil(10*rand(M,nof));
 %      2    10
 %      8     3
 %      4     4];
-
-fBetaRouting =[
-     3     7
-     8     7
-     2     7
-     3    10
-     1     3
-     6     8
-     7     3
-     6     2
-     5     7
-     7     5];
- 
+% 
+% fBetaRouting =[
+%      3     7
+%      8     7
+%      2     7
+%      3    10
+%      1     3
+%      6     8
+%      7     3
+%      6     2
+%      5     7
+%      7     5];
+%  
 
  
  
@@ -150,17 +150,17 @@ etaMu                   = ceil(10*rand(M,1));
 %      1
 %      8];
 % Initial condition, just set all to zero and to generic
-
- etaMu = [     5
-     7
-     8
-     4
-     7
-     5
-     9
-     9
-     3
-     7];
+% 
+%  etaMu = [     5
+%      7
+%      8
+%      4
+%      7
+%      5
+%      9
+%      9
+%      3
+%      7];
  
  
 afInitialConditionRho =  1 * zeros(nof, M);
@@ -179,10 +179,12 @@ afInitialConditionRho1 = 1*rand(nof, M);
 % afInitialConditionRho1 = [
 %     0.2691    0.5479    0.4177    0.3015    0.6663    0.6981    0.1781    0.9991  0.0326    0.8819
 %     0.4228    0.9427    0.9831    0.7011    0.5391    0.6665    0.1280    0.1711  0.5612    0.6692 ];
-afInitialConditionRho1 =[
-    0.5822    0.8699    0.3181    0.9398    0.4795    0.5447    0.5439    0.5225    0.2187    0.1097
-    0.5407    0.2648    0.1192    0.6456    0.6393    0.6473    0.7210    0.9937    0.1058    0.0636]
+% afInitialConditionRho1 =[
+%     0.5822    0.8699    0.3181    0.9398    0.4795    0.5447    0.5439    0.5225    0.2187    0.1097
+%     0.5407    0.2648    0.1192    0.6456    0.6393    0.6473    0.7210    0.9937    0.1058    0.0636]
 
+
+% ComputeMu(afInitialConditionRho1, afThreholdRho, aafFmax(:, 1), etaMu, nof)
 % afInitialConditionRho1(1,7) = 0;
 % afInitialConditionRho1(2,4) = 0;
 % afInitialConditionRho1(1,2) = 0;
@@ -192,19 +194,19 @@ afInitialConditionRho1 =[
 % afInitialConditionRho1(1,7) = 0;
 
 % Don't use any traffic lights
-bFlagUseTrafficLights   = 1; 
+bFlagUseTrafficLights   = 0; 
 
 %
 [aafRho, aafFlow, aaafG, aafChange, afDischarge]         = SimulateMulticommodityNetwork(                   ...
                                                             A, aafFmax, afLambda0, afThreholdRho, T, Tmax,         ...
                                                             afInitialConditionRho, fAlphaRouting,                 ...
                                                             fBetaRouting, etaMu, nof, originNodes, destNodes, bFlagUseTrafficLights);
-aafRho1 = aafRho; aafFlow1 = aafFlow; aaafG1 = aaafG; aafChange1 = aafChange; afDischarge1 = afDischarge;
-
-[aafRho1, aafFlow1, aaafG1, aafChange1, afDischarge1]         = SimulateMulticommodityNetwork(                   ...
-                                                            A, aafFmax, afLambda0, afThreholdRho, T, Tmax,         ...
-                                                            afInitialConditionRho1, fAlphaRouting,                 ...
-                                                            fBetaRouting, etaMu, nof, originNodes, destNodes, bFlagUseTrafficLights);
+% aafRho1 = aafRho; aafFlow1 = aafFlow; aaafG1 = aaafG; aafChange1 = aafChange; afDischarge1 = afDischarge;
+% 
+% [aafRho1, aafFlow1, aaafG1, aafChange1, afDischarge1]         = SimulateMulticommodityNetwork(                   ...
+%                                                             A, aafFmax, afLambda0, afThreholdRho, T, Tmax,         ...
+%                                                             afInitialConditionRho1, fAlphaRouting,                 ...
+%                                                             fBetaRouting, etaMu, nof, originNodes, destNodes, bFlagUseTrafficLights);
 %%
 close all
 figure
@@ -213,8 +215,8 @@ for iEdge = 1:M
     hold on
     plot(squeeze(aafRho(1, iEdge, :)),'b')
     plot(squeeze(aafRho(2, iEdge, :)),'g')
-      plot(squeeze(aafRho1(1, iEdge, :)),':b')
-     plot(squeeze(aafRho1(2, iEdge, :)),':g')
+%       plot(squeeze(aafRho1(1, iEdge, :)),':b')
+%      plot(squeeze(aafRho1(2, iEdge, :)),':g')
     title(['Rho ', num2str(iEdge)])
 end
 figure
