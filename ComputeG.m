@@ -17,18 +17,17 @@ for iEdge = 2:iNumberOfEdges
     G(iEdge) = fAlphaRouting(iEdge)*exp(-fBetaRouting(iEdge)*afRhoModified(iEdge));
     %
 end;%
-G = G/sum(G);
+
 if bFlagUseTrafficLights == 0
     % in case traffic light is not used, the fraction of flow which is
     % retained is always zero (except - see next case)
     G(1) = 0; 
 else
         afRhoModified(1) = RhoModified(afRho(1), afThreholdRho(1));
-   G(1) = fAlphaRouting(1)*exp(-10*afRhoModified(1));
+   G(1) = fAlphaRouting(1)*exp(-1*afRhoModified(1));
 end
 G = G/sum(G);
 if any(isnan(G))
-    dist('oops');
 	% if there are NaN, this means that all the elements of G are zero
     % 
     aiStillNotAtCapacity = find(afRho < afThreholdRho);

@@ -6,17 +6,22 @@ close all
 % Import the selected topology
 topologyFail
 % Number of time steps
-Tmax = 3000;
+Tmax = 15000;
 
 % Length of each timestep
 T = 0.01;
 
 % Set the capacity on the edges
-aafFmax = 2*ones(M, Tmax);
-%aafFmax(:,1500:end) = 1;
-% aafFmax(3,1500:end) = 1;
+aafFmax = 1*ones(M, Tmax);
 
-
+aafFmax(1,:) = 1;
+aafFmax(2,:) = 12;
+aafFmax(3,:) = 2;
+aafFmax(4,:) = 10;
+aafFmax(5,:) = 1;
+aafFmax(6,:) = 1;
+aafFmax(7,:) = 5;
+aafFmax(8,:) = 5;
 
 % aafFmax(4,:) = 3;
 % aafFmax(3,:) = 3;
@@ -32,7 +37,8 @@ aafFmax = 2*ones(M, Tmax);
 
 % Total inflow
 afLambda0 =   ones(nof, Tmax); 
-
+afLambda0(1,:)= 10.5;
+afLambda0(2,:) = 3.9;
 
 
 %afLambda0(2,:) = 3;
@@ -48,116 +54,29 @@ afThreholdRho = Inf*rand(M,1);
 fBetaRouting            = ceil(10*rand(M,nof));     
 
 
-
-% fBetaRouting = [
-%      5     1
-%      1     4
-%      6     6
-%      5     7
-%      7     5
-%      7     9
-%      7     8
-%      1    10];
-
 % 
-% fBetaRouting = [     1     2
-%      9     7% fBetaRouti% fBetaRouting = [
-%      5     6
-%     10     9untitled.png
-%      1     9
-%      4     8
-%      6     4
-%      1     5
-%      8     8
-%      6     2];
-
-% fBetaRouting(5,1) = 1;
-% % % squeeze(aafRho(1, iEdge, :))untitled.png
-% fBetaRouting(2,2) = 2;
-% fBetaRouting(5,2) = 9;
-
-%     10     5
-%      8     8
-%      1     8
-%      3 fBetaRouting            = ones(M,nof);     
-%   10
-%      4     9
-%      7     4
-%      2     7]
-     %8     2]
-% fBetaRouting = [ fBetaRouting(2,1) = 10;
-% fBetaRouting(5,1) = 1;
-
-%      7     9
-%      7     8
-%      4     6
-%      2     2
+% fBetaRouting =[ 7     6
 %      1    10
-%      5     3squeeze(aafRho(1, iEdge, :))
-%      2    10
-%      8     3
-%      4     4];
-% 
-% fBetaRouting =[
-%      3     7
-%      8     7
-%      2     7
-%      3    10
-%      1     3
-%      6     8
-%      7     3
-%      6     2
-%      5     7
-%      7     5];
-%  
-
- 
- 
- % fBetaRouting(2,1) = 9;
-% fBetaRouting(5,1) = 1;% fBetaRouting(2,1) = 90;
-% fBetaRouting(5,1) = 1;
-% % % squeeze(aafRho(1, iEdge, :))
-% fBetaRouting(2,2) = 20;
-% fBetaRouting(5,2) = 9;
-
-% % % squeeze(aafRho(1, iEdge, :))
-% fBetaRouting(2,2) = 2;
-% fBetaRouting(5,2) = 9;
-
-
-% Flow 1
-% fBetaRouting(2,1) = 9;
-% fBetaRouting(5,1) = 1;
-% % % squeeze(aafRho(1, iEdge, :))
-% fBetaRouting(2,2) = 2;
-% fBetaRouting(5,2) = 9;
-
-% fBetaRouting            = ones(M,nof);     
-% 
-% fBetaRouting = [
-%      5     6
-%     10     9
-%      1     9
-%      4     8
-%      6     4
-%      1     5
-%      8     8
-% %      6     2];
-% 
-% fBetaRouting = [ 9     1afInitialConditionRho1 =
-%      5     4
-%      5     6
-%      9     5
-%      1     7
-%      2     7
-%      2     3
-%      4     5
-%      9     1
-%      9    10];
-
+%      4     9
+%     10     3
+%      7     7
+%      4     4
+%      7    10
+%      3     1];
+     
+     
 % Mu (CHANGE)
 etaMu                   = ceil(10*rand(M,1)); 
 
+
+% etaMu = [     3
+%      9
+%      1
+%      6
+%      9
+%      8
+%      2
+%      5];
 % etaMu = [
 %      6
 %      4
@@ -247,6 +166,8 @@ for iEdge = 1:M
 %       plot(squeeze(aafRho1(1, iEdge, :)),':b')
 %      plot(squeeze(aafRho1(2, iEdge, :)),':g')
     title(['Rho ', num2str(iEdge)])
+
+    set(gca, 'XTick', [])
 %  
   
 end
@@ -258,6 +179,10 @@ for iEdge = 1:M
 
     plot(squeeze(aafFlow(2, iEdge, :)),'g')
     plot(squeeze(aafFlow(1, iEdge, :)) + squeeze(aafFlow(2, iEdge, :)),'r')
+    
+   title(['Flow ', num2str(iEdge)])
+        set(gca, 'XTick', [])
+
 %    plot(squeeze(aafFlow1(1, iEdge, :)) + squeeze(aafFlow1(2, iEdge, :)),'r')
 %     plot(squeeze(aafFlow1(1, iEdge, :)),':b')
 %   plot(squeeze(aafFlow1(2, iEdge, :)),':g')

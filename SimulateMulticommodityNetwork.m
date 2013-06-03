@@ -41,12 +41,13 @@ for t = 2:Tmax
     % For each origin
     for i = 1:nof
         aiEdgesOutgoingFromOrigin                   = find(aafIncidenceMatrix(:, originNodes(i)) == 1);
-        afRhoOfCurrentEdges                         = afOldRho(i, aiEdgesOutgoingFromOrigin);
+        afRhoOfCurrentEdges                         = afOldRho(:, aiEdgesOutgoingFromOrigin);
         afCurrentThreshold                          = afThreholdRho(aiEdgesOutgoingFromOrigin);
         %afCurrentBetaRouting                        = fBetaRouting*ones(size(aiEdgesOutgoingFromOrigin));
-  
+        afCurrentAlphaRouting               =       fAlphaRouting(aiEdgesOutgoingFromOrigin,i); 
+
         afCurrentBetaRouting                        = fBetaRouting(aiEdgesOutgoingFromOrigin, i);
-        aaafG(i, aiEdgesOutgoingFromOrigin, end, t)	= ComputeGAtOrigin(afRhoOfCurrentEdges, afCurrentThreshold, afCurrentBetaRouting);
+        aaafG(i, aiEdgesOutgoingFromOrigin, end, t)	= ComputeGAtOrigin(sum(afRhoOfCurrentEdges), afCurrentThreshold, afCurrentAlphaRouting, afCurrentBetaRouting, i);
     end
     % Loop through all edges
     for iEdges = 1:iNumberEdges
@@ -66,11 +67,25 @@ for t = 2:Tmax
             
             % Should not need a loop here, but I'm a little lazy at the
             % moment
+            
+            G = zeros(length(aiCurrentEdges),nof);
             for i = 1:nof
                 % ComputeG(sum(afRhoOfCurrentEdges)', afCurrentThreshold, afCurrentAlphaRouting(:, i), afCurrentBetaRouting(:, i), 0)
-                aaafG(i, aiCurrentEdges, iEdges, t)	= ComputeG(sum(afRhoOfCurrentEdges)', afCurrentThreshold, afCurrentAlphaRouting(:, i), afCurrentBetaRouting(:, i), bFlagUseTrafficLights);
-                aaafG(i, iEdges, iEdges, t)            = aaafG(i, iEdges, iEdges, t) - 1;
+                   G(:,i) = ComputeG(sum(afRhoOfCurrentEdges)', afCurrentThreshold, afCurrentAlphaRouting(:, i), afCurrentBetaRouting(:, i), bFlagUseTrafficLights);
             end
+            
+            bp = mean(G(1,:));
+            
+            for i = 1:nof
+                if (bFlagUseTrafficLights)
+                    G(1,i) = bp;
+                    G(2:end,i) = (1-bp)/sum(G(2:end,i)).*G(2:end,i);
+                end
+                aaafG(i, aiCurrentEdges, iEdges, t)	= G(:,i);
+                aaafG(i, iEdges, iEdges, t)            = aaafG(i, iEdges, iEdges, t)- 1; 
+                
+            end
+             
             %
         else%
             %
