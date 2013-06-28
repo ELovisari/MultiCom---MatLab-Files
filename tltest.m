@@ -1,5 +1,5 @@
 clc
-%clear all
+clear all
 close all
 
 
@@ -23,16 +23,6 @@ aafFmax(6,:) = 1;
 aafFmax(7,:) = 5;
 aafFmax(8,:) = 5;
 
-% aafFmax(4,:) = 3;
-% aafFmax(3,:) = 3;
-% aafFmax(6,:) = 10;
-% aafFmax(7,:) = 10;
-% aafFmax(8,:) = 10;
-% Allow higher capacity on the draining links
-%aafFmax(2, :) = 1*ones(1, Tmax);
-%aafFmax(8, :) = 1*ones(1, Tmax);
-
-
 
 
 % Total inflow
@@ -41,11 +31,6 @@ afLambda0(1,:)= 10.5;
 afLambda0(2,:) = 3.9;
 
 
-%afLambda0(2,:) = 3;
-% afLambda0(2,:) = 1.8;
-%afLambda0(1,1001:end) =0;
-% Stop one flow after some time
-% afLambda0(1, 1000:2000) = 0;
 
 % No thresholds
 afThreholdRho = Inf*rand(M,1);
@@ -53,93 +38,40 @@ afThreholdRho = Inf*rand(M,1);
 % Routing policy 
 fBetaRouting            = ceil(10*rand(M,nof));     
 
+     
 
-% 
-% fBetaRouting =[ 7     6
-%      1    10
-%      4     9
-%     10     3
-%      7     7
-%      4     4
-%      7    10
-%      3     1];
-     
-     
+fBetaRouting =[
+     4     1
+     7     8
+     8     3
+     6     5
+     4     7
+     2     4
+     6     8
+     3     4];
 % Mu (CHANGE)
+
 etaMu                   = ceil(10*rand(M,1)); 
 
 
-% etaMu = [     3
-%      9
-%      1
-%      6
-%      9
-%      8
-%      2
-%      5];
-% etaMu = [
-%      6
-%      4
-%      2
-%      7
-%      8
-%      5
-%      1
-%      3];
-%etaMu(6) = 1;
-% etaMu = [    2
-%      2
-%      4
-%      2
-%      5
-%      4
-%     10
-%     10
-%      1
-%      8];
-% Initial condition, just set all to zero and to generic
-% 
-%  etaMu = [     5
-%      7
-%      8
-%      4
-%      7
-%      5
-%      9
-%      9
-%      3
-%      7];
+etaMu =[      7
+     8
+     5
+     1
+     4
+     5
+     3
+     2];
+
+
  
  
 afInitialConditionRho =  1 * zeros(nof, M);
 
-% afInitialConditionRho = [
-%     0.2691    0.5479    0.4177    0.3015    0.6663    0.6981    0.1781    0.9991  0.0326    0.8819
-%     0.4228    0.9427    0.9831    0.7011    0.5391    0.6665    0.1280    0.1711  0.5612    0.6692 ];
-   
+
    
 afInitialConditionRho1 = 1*rand(nof, M);
-% afInitialConditionRho1 = [
-%         0.1904    0.4607    0.1564    0.6448    0.1909    0.4820    0.5895    0.3846    0.2518    0.6171
-%     0.3689    0.9816    0.8555    0.3763    0.4283    0.1206    0.2262    0.5830    0.2904    0.2653];
-% 
-% 
-% afInitialConditionRho1 = [
-%     0.2691    0.5479    0.4177    0.3015    0.6663    0.6981    0.1781    0.9991  0.0326    0.8819
-%     0.4228    0.9427    0.9831    0.7011    0.5391    0.6665    0.1280    0.1711  0.5612    0.6692 ];
-% afInitialConditionRho1 =[
-%     0.5822    0.8699    0.3181    0.9398    0.4795    0.5447    0.5439    0.5225    0.2187    0.1097
-%     0.5407    0.2648    0.1192    0.6456    0.6393    0.6473    0.7210    0.9937    0.1058    0.0636]
 
-
-% ComputeMu(afInitialConditionRho1, afThreholdRho, aafFmax(:, 1), etaMu, nof)
-% afInitialConditionRho1(1,7) = 0;
-% afInitialConditionRho1(2,4) = 0;
-% afInitialConditionRho1(1,2) = 0;
-% afInitialConditionRho1(2,8) = 0;
-% afInitialConditionRho1(1,6) = 0;
-% afInitialConditionRho1(1,5) = 0;
-% afInitialConditionRho1(1,7) = 0;
 
 % Don't use any traffic lights
 bFlagUseTrafficLights   = 1; 
@@ -161,13 +93,18 @@ figure
 for iEdge = 1:M
     subplot(floor(M/2)+1, 2, iEdge)
     hold on
+    temp = squeeze(aafRho(1, iEdge, :));
     plot(squeeze(aafRho(1, iEdge, :)),'b')
     plot(squeeze(aafRho(2, iEdge, :)),'g')
 %       plot(squeeze(aafRho1(1, iEdge, :)),':b')
 %      plot(squeeze(aafRho1(2, iEdge, :)),':g')
     title(['Rho ', num2str(iEdge)])
 
-    set(gca, 'XTick', [])
+%     filename = ['Rho1Edge' num2str(iEdge) '.dat'];
+%     t = 1:1:1500;
+%     temp =  [t' temp];
+%     save(filename, 'temp', '-ascii');
+%     set(gca, 'XTick', [])
 %  
   
 end
@@ -193,7 +130,6 @@ for iEdge = 1:M
 %         disp(['Change of aggregate: ' num2str(aafFlow(1, iEdge, Tmax-3)- aafFlow(1, iEdge, floor(Tmax/2)-3) + aafFlow(2, iEdge, Tmax-3)- aafFlow(2, iEdge, floor(Tmax/2)-3))]);
 end
 
-ComputeMu(afInitialConditionRho1, afThreholdRho, aafFmax, etaMu, nof)
 %max(max(aafFlow(1, 8, :)) + squeeze(aafFlow(2, 8, :)))
 % %%
 % figure

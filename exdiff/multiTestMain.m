@@ -6,7 +6,7 @@ close all
 % Import the selected topology
 topologyPartialSplit
 % Number of time steps
-Tmax = 3000;
+Tmax = 30000;
 
 % Length of each timestep
 T = 0.01;
@@ -296,8 +296,8 @@ for iEdge = 1:M
     hold on
   plot(squeeze(aafRho(1, iEdge, :)),'b')
     plot(squeeze(aafRho(2, iEdge, :)),'g')
-%      plot(squeeze(aafRho1(1, iEdge, :)),':b')
-%     plot(squeeze(aafRho1(2, iEdge, :)),':g')
+%       plot(squeeze(aafRho1(1, iEdge, :)),':b')
+%      plot(squeeze(aafRho1(2, iEdge, :)),':g')
     title(['Rho ', num2str(iEdge)])
 %  
   
@@ -311,8 +311,8 @@ for iEdge = 1:M
     plot(squeeze(aafFlow(2, iEdge, :)),'g')
     plot(squeeze(aafFlow(1, iEdge, :)) + squeeze(aafFlow(2, iEdge, :)),'r')
 %    plot(squeeze(aafFlow1(1, iEdge, :)) + squeeze(aafFlow1(2, iEdge, :)),'r')
-%    plot(squeeze(aafFlow1(1, iEdge, :)),':b')
-%  plot(squeeze(aafFlow1(2, iEdge, :)),':g')
+%     plot(squeeze(aafFlow1(1, iEdge, :)),':b')
+%   plot(squeeze(aafFlow1(2, iEdge, :)),':g')
     title(['Flow ', num2str(iEdge)])
         disp(['Edge '  num2str(iEdge)]);
         %pt = 1500;
@@ -325,16 +325,16 @@ for iEdge = 1:M
         %disp(['Change of aggregate: ' num2str(aafFlow(1, iEdge, Tmax-3)- aafFlow(1, iEdge, pt-3) + aafFlow(2, iEdge, Tmax-3)- aafFlow(2, iEdge, pt-3))]);
 end
 
-% t = 1:1:30000;
-%t = t';
-%smatrix = [t squeeze(aafRho(1,1,:)) squeeze(aafRho(1,2,:)) squeeze(aafRho(2,1,:)) squeeze(aafRho(2,2,:)) ]
+t = 1:1:30000;
+t = t';
+smatrix = [t squeeze(aafRho(1,1,:)) squeeze(aafRho(1,2,:)) squeeze(aafRho(2,1,:)) squeeze(aafRho(2,2,:)) ]
 
-%save rho.dat smatrix -ascii 
+save rho.dat smatrix -ascii 
 
 
-%smatrix = [t squeeze(aafFlow(1,1,:)) squeeze(aafFlow(1,2,:)) squeeze(aafFlow(2,1,:)) squeeze(aafFlow(2,2,:)) ]
+smatrix = [t squeeze(aafFlow(1,1,:)) squeeze(aafFlow(1,2,:)) squeeze(aafFlow(2,1,:)) squeeze(aafFlow(2,2,:)) ]
 
-%save flow.dat smatrix -ascii 
+save flow.dat smatrix -ascii 
 
 % ComputeMu(afInitialConditionRho1, afThreholdRho, aafFmax, etaMu, nof)
 %max(max(aafFlow(1, 8, :)) + squeeze(aafFlow(2, 8, :)))

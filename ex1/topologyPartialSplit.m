@@ -16,8 +16,6 @@ M = 2; N = 3;
 A = zeros(M,N);
 A(1,1)      = 1;    A(1,2)      = -1;
 A(2,1)      = 1;    A(2,3)      = -1;
-%A(3,1)      = 1;    A(3,4)      = -1;
-
 
 
 % Maybe we look at this plot later
