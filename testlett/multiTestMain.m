@@ -6,13 +6,13 @@ close all
 % Import the selected topology
 topologyMultiTest6
 % Number of time steps
-Tmax = 1500;
+Tmax = 3000;
 
 % Length of each timestep
 T = 0.01;
 
 % Set the capacity on the edges
-aafFmax = 2*ones(M, Tmax);
+aafFmax = 1.2*ones(M, Tmax);
 
 
 
@@ -24,22 +24,39 @@ afThreholdRho = Inf*rand(M,1);
 
 % Routing policy 
 fBetaRouting            = ceil(20*rand(M,nof)); 
-
- fBetaRouting = [
-      5     1
-      1     4
-      6     6
-      5     7
-      7     5
-      7     9
-      7     8
-      1    10];
-
+% 
+%  fBetaRouting = [
+%       5     1
+%       1     4
+%       6     6
+%       5     7
+%       7     5
+%       7     9
+%       7     8
+%       1    10];
+fBetaRoutin =[
+    11    13
+    11     6
+     2     9
+    19    17
+    18     4
+     9     7
+    16    10
+     3     7];
 
 
 etaMu                   = ceil(10*rand(M,1)); 
-etaMu = 1*ones(M, 1);
+% etaMu = 1*ones(M, 1);
 
+etaMu = [
+     8
+    10
+     2
+     3
+     8
+     4
+    10
+    10];
 
 %      7];
  
@@ -53,9 +70,10 @@ afInitialConditionRho =  1 * zeros(nof, M);
    
 afInitialConditionRho1 = 1*rand(nof, M);
 
-
-afInitialConditionRho1 = [1 0 1 1 1 1 0 1
-                          1.5 1.5 1.5 0 1.5 1.5 1 0 ];
+afInitialConditionRho1 =[ 0.6437    0.4019    0.9852    0.9336    0.4840    0.8876    0.3954    0.4024
+    0.8601    0.6319    0.5595    0.7203    0.6390    0.1987    0.9922    0.6589];
+% afInitialConditionRho1 = [1 0 1 1 1 1 0 1
+%                           1.5 1.5 1.5 0 1.5 1.5 1 0 ];
 
 
 % Don't use any traffic lights
