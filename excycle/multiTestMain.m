@@ -6,7 +6,7 @@ close all
 % Import the selected topology
 topologyMultiTest6
 % Number of time steps
-Tmax = 1500;
+Tmax = 12000;
 
 % Length of each timestep
 T = 0.01;
@@ -68,10 +68,10 @@ bFlagUseTrafficLights   = 0;
                                                             fBetaRouting, etaMu, nof, originNodes, destNodes, bFlagUseTrafficLights);
 aafRho1 = aafRho; aafFlow1 = aafFlow; aaafG1 = aaafG; aafChange1 = aafChange; afDischarge1 = afDischarge;
 
-[aafRho1, aafFlow1, aaafG1, aafChange1, afDischarge1]         = SimulateMulticommodityNetwork(                   ...
-                                                            A, aafFmax, afLambda0, afThreholdRho, T, Tmax,         ...
-                                                            afInitialConditionRho1, fAlphaRouting,                 ...
-                                                            fBetaRouting, etaMu, nof, originNodes, destNodes, bFlagUseTrafficLights);
+% [aafRho1, aafFlow1, aaafG1, aafChange1, afDischarge1]         = SimulateMulticommodityNetwork(                   ...
+%                                                             A, aafFmax, afLambda0, afThreholdRho, T, Tmax,         ...
+%                                                             afInitialConditionRho1, fAlphaRouting,                 ...
+%                                                             fBetaRouting, etaMu, nof, originNodes, destNodes, bFlagUseTrafficLights);
 %%
 close all
 figure

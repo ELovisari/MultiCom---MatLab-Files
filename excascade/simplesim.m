@@ -1,6 +1,6 @@
 
 
-Tmax = 20000;
+Tmax = 8000;
 h = 0.01;
 
 flows = zeros(2,4,Tmax);    % Commodity, Link, Time
@@ -20,10 +20,6 @@ lambdaA = [1.35 0.4];
 lambdaB = [1.35 1.1];
 
 for t = 2:Tmax
-    
-    
-  
-    
     % Edge 1
     fl = ComputeMu(rho(:,1,t-1), 1.5);
     flows(1,1,t-1) = fl(1);
@@ -93,10 +89,25 @@ for edge = 1:4
 end
 
 pt = floor(Tmax/2);
-flows(1,1,end-3) - flows(1,1,pt-3)
-flows(2,1,end-3) - flows(2,1,pt-3)
+%%
+for i = 1:4
 
-flows(1,3,end-3) - flows(1,3,pt-3)
-flows(2,3,end-3) - flows(2,3,pt-3)
-flows(1,4,end-3) - flows(1,4,pt-3)
-flows(2,4,end-3) - flows(2,4,pt-3)
+    disp(['\textbf{Edge $e_' num2str(i) '$} & \multicolumn{3}{c|}{}   \\ \hline ']);
+    disp(['Commodity $A$ & ' num2str(flows(1,i,pt-3)) ' & ' num2str(flows(1,i,end-3) ) ' &  ' num2str(flows(1,i,end-3) - flows(1,i,pt-3)) ' \\ \hline ']);
+    disp(['Commodity $B$ & ' num2str(flows(2,i,pt-3)) ' & ' num2str(flows(2,i,end-3) ) ' &  ' num2str(flows(2,i,end-3) - flows(2,i,pt-3)) ' \\ \hline ']);
+    disp(['Aggregate $A+B$ & ' num2str(flows(1,i,pt-3) + flows(2,i,pt-3) ) ' & ' num2str(flows(1,i,end-3) + flows(2,i,end-3)) ' &  ' num2str(flows(1,i,end-3)+flows(2,i,end-3)  - flows(1,i,pt-3) -flows(2,i,pt-3)) ' \\ \hline ']);
+
+end
+
+
+t = 1:1:Tmax;
+ t = t';
+fil = 1:10:Tmax;
+ % smatrix = [t squeeze(aafRho(1,1,:)) squeeze(aafRho(1,2,:)) squeeze(aafRho(2,1,:)) squeeze(aafRho(2,2,:)) ]
+% 
+% save rho.dat smatrix -ascii 
+% 
+% 
+smatrix = [t(fil) squeeze(flows(1,1,fil)) squeeze(flows(2,1,fil)) squeeze(flows(1,2,fil)) squeeze(flows(2,2,fil)) squeeze(flows(1,3,fil)) squeeze(flows(2,3,fil)) squeeze(flows(1,4,fil)) squeeze(flows(2,4,fil))]
+ 
+save flow.dat smatrix -ascii 

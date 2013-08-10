@@ -6,7 +6,7 @@ close all
 % Import the selected topology
 topologyPartialSplit
 % Number of time steps
-Tmax = 200000;
+Tmax = 8000;
 
 % Length of each timestep
 T = 0.01;
@@ -345,15 +345,16 @@ for iEdge = 1:M
 
         disp(['Change of aggregate: ' num2str(aafFlow(1, iEdge, Tmax-3)- aafFlow(1, iEdge, pt-3) + aafFlow(2, iEdge, Tmax-3)- aafFlow(2, iEdge, pt-3))]);
 end
-% 
+%%
 t = 1:1:Tmax;
 t = t';
-smatrix = [t squeeze(aafRho(1,1,:)) squeeze(aafRho(2,1,:)) squeeze(aafRho(2,1,:)) squeeze(aafRho(2,2,:)) ]
+fil = 1:10:Tmax;
+% smatrix = [t squeeze(aafRho(1,1,:)) squeeze(aafRho(2,1,:)) squeeze(aafRho(2,1,:)) squeeze(aafRho(2,2,:)) ]
+% 
+% save rho.dat smatrix -ascii 
 
-save rho.dat smatrix -ascii 
 
-
-smatrix = [t squeeze(aafFlow(1,1,:)) squeeze(aafFlow(1,2,:)) squeeze(aafFlow(2,1,:)) squeeze(aafFlow(2,2,:)) ]
+smatrix = [t(fil) squeeze(aafFlow(1,1,fil)) squeeze(aafFlow(2,1,fil)) squeeze(aafFlow(1,2,fil)) squeeze(aafFlow(2,2,fil)) ]
 
 save flow.dat smatrix -ascii 
 
